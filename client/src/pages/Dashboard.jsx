@@ -115,8 +115,13 @@ const Dashboard = () => {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             updateUser(res.data);
+            // Update image preview immediately
+            if (res.data.avatar) {
+                setImagePreview(`${import.meta.env.VITE_API_URL}${res.data.avatar}`);
+            }
             alert('Profile updated successfully!');
             setProfileData(prev => ({ ...prev, password: '' }));
+            setProfileImage(null); // Clear the file input
         } catch (error) {
             console.error(error);
             alert('Failed to update profile.');

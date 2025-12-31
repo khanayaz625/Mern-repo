@@ -18,6 +18,7 @@ app.use(cors({
         "https://my-crm-ten-tan.vercel.app",
         "https://my-b33cf45nv-ayaz-khans-projects-ebbf8d73.vercel.app",
         "https://my-awei378g0-ayaz-khans-projects-ebbf8d73.vercel.app",
+        "https://my-6g1kd70v-ayaz-khans-projects-ebbf8d73.vercel.app",
         "https://crm-backend-m1f3.onrender.com"
     ],
     credentials: true

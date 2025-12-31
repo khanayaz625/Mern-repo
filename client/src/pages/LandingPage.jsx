@@ -30,10 +30,10 @@ const LandingPage = () => {
             {/* Navigation */}
             <nav className="flex justify-between items-center p-6 max-w-7xl mx-auto z-20 relative">
                 <div className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
-                    MasterCourse
+                    E-Course4u
                 </div>
                 <button onClick={() => navigate('/login')} className="px-5 py-2 glass rounded-full hover:bg-white/10 transition text-sm">
-                    Employee Login
+                    Login
                 </button>
             </nav>
 
@@ -161,7 +161,7 @@ const LandingPage = () => {
                             </div>
 
                             <Button disabled={status === 'submitting'} type="submit">
-                                {status === 'submitting' ? 'Sending...' : 'Request Access'}
+                                {status === 'submitting' ? 'Sending...' : 'Request a Call'}
                             </Button>
                             {status === 'error' && <p className="text-red-400 text-sm text-center">Something went wrong. Please try again.</p>}
                         </form>
@@ -172,7 +172,7 @@ const LandingPage = () => {
 
             {/* Footer */}
             <footer className="py-10 border-t border-white/10 text-center text-muted text-sm">
-                &copy; 2025 MasterCourse. All rights reserved.
+                &copy; 2025 KSDYSA LEARNING. All rights reserved.
             </footer>
         </div>
     );

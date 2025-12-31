@@ -13,16 +13,17 @@ app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://my-crm-ten-tan.vercel.app"
-  ],
-  credentials: true
+    origin: [
+        "http://localhost:5173",
+        "https://my-crm-ten-tan.vercel.app",
+        "https://my-b33cf45nv-ayaz-khans-projects-ebbf8d73.vercel.app"
+    ],
+    credentials: true
 }));
 
 /* ---------- Root Test Route ---------- */
 app.get("/", (req, res) => {
-  res.send("CRM Backend is running");
+    res.send("CRM Backend is running");
 });
 
 /* ---------- API Routes ---------- */
@@ -31,7 +32,7 @@ app.use("/api/leads", leadRoutes);
 
 /* ---------- MongoDB Connection ---------- */
 mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log("✅ MongoDB connected successfully"))
-  .catch(err => console.error("❌ MongoDB connection error:", err));
+    .then(() => console.log("✅ MongoDB connected successfully"))
+    .catch(err => console.error("❌ MongoDB connection error:", err));
 
 export default app;

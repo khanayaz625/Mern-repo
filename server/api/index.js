@@ -1,6 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import bcrypt from "bcryptjs";
+import User from "../models/User.js";
 
 // Routes
 import authRoutes from "../routes/auth.js";
@@ -32,9 +34,6 @@ app.get("/", (req, res) => {
 /* ---------- One-Time Setup Route ---------- */
 app.get("/setup-admin", async (req, res) => {
     try {
-        const bcrypt = await import('bcryptjs');
-        const User = (await import('../models/User.js')).default;
-
         const email = 'admin@crm.com';
         const existingUser = await User.findOne({ email });
 
@@ -42,7 +41,7 @@ app.get("/setup-admin", async (req, res) => {
             return res.json({ message: 'Admin user already exists', email });
         }
 
-        const hashedPassword = await bcrypt.default.hash('admin123', 10);
+        const hashedPassword = await bcrypt.hash('admin123', 10);
         const user = new User({
             name: 'Admin User',
             email,

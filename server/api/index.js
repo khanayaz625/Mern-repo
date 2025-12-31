@@ -29,6 +29,34 @@ app.get("/", (req, res) => {
     res.send("CRM Backend is running");
 });
 
+/* ---------- One-Time Setup Route ---------- */
+app.get("/setup-admin", async (req, res) => {
+    try {
+        const bcrypt = await import('bcryptjs');
+        const User = (await import('../models/User.js')).default;
+
+        const email = 'admin@crm.com';
+        const existingUser = await User.findOne({ email });
+
+        if (existingUser) {
+            return res.json({ message: 'Admin user already exists', email });
+        }
+
+        const hashedPassword = await bcrypt.default.hash('admin123', 10);
+        const user = new User({
+            name: 'Admin User',
+            email,
+            password: hashedPassword,
+            role: 'admin'
+        });
+
+        await user.save();
+        res.json({ message: '✅ Admin user created successfully!', email, password: 'admin123' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 /* ---------- API Routes ---------- */
 app.use("/api/auth", authRoutes);
 app.use("/api/leads", leadRoutes);

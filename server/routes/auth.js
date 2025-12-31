@@ -3,8 +3,8 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import { verifyAdmin, verifyToken } from '../middleware/authMiddleware.js';
-// import multer from 'multer';
-// import path from 'path';
+import multer from 'multer';
+import path from 'path';
 
 const router = express.Router();
 
@@ -48,19 +48,19 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// Multer Config - Temporarily disabled
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, 'uploads/');
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, `${Date.now()}-${file.originalname}`);
-//     }
-// });
-// const upload = multer({ storage });
+// Multer Config
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, `${Date.now()}-${file.originalname}`);
+    }
+});
+const upload = multer({ storage });
 
-// Update Profile (Authenticated User) - File upload temporarily disabled
-router.put('/profile', verifyToken, async (req, res) => {
+// Update Profile (Authenticated User)
+router.put('/profile', verifyToken, upload.single('avatar'), async (req, res) => {
     try {
         const { name, email, password } = req.body;
         const updateData = { name, email };
@@ -69,10 +69,9 @@ router.put('/profile', verifyToken, async (req, res) => {
             updateData.password = await bcrypt.hash(password, 10);
         }
 
-        // File upload temporarily disabled
-        // if (req.file) {
-        //     updateData.avatar = `/uploads/${req.file.filename}`;
-        // }
+        if (req.file) {
+            updateData.avatar = `/uploads/${req.file.filename}`;
+        }
 
         const user = await User.findByIdAndUpdate(req.user.id, updateData, { new: true }).select('-password');
         res.json(user);
